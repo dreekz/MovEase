@@ -1,0 +1,91 @@
+    User:
+        Associations:
+            Aggregation with ShoppingCart: A User has a ShoppingCart to store selected tickets.
+            Aggregation with Notification: A User can receive Notifications.
+            Aggregation with Payment: A User can make Payments for ticket purchases.
+            Association with Admin: A User may have an association with an Admin for administrative privileges.
+        Inheritance:
+            None.
+
+    Ticket:
+        Associations:
+            Aggregation with User: A Ticket is associated with the User who purchases it.
+            Aggregation with Movie: A Ticket is associated with the Movie it is for.
+            Aggregation with Payment: A Ticket is associated with the Payment made for its purchase.
+            Aggregation with Venue: A Ticket is associated with the Venue where the event takes place.
+        Inheritance:
+            None.
+
+    Movie:
+        Associations:
+            Aggregation with Ticket: A Movie is associated with the Tickets available for it.
+            Aggregation with Venue: A Movie is associated with the Venue where it is screened.
+        Inheritance:
+            None.
+
+    Payment:
+        Associations:
+            Aggregation with User: A Payment is associated with the User who made the payment.
+            Aggregation with Ticket: A Payment is associated with the Ticket(s) it is made for.
+            Aggregation with PaymentGateway: A Payment is processed through the PaymentGateway.
+        Inheritance:
+            None.
+
+    PaymentGateway:
+        Associations:
+            Aggregation with Payment: The PaymentGateway processes the Payment transactions.
+        Inheritance:
+            None.
+
+    ShoppingCart:
+        Associations:
+            Aggregation with User: The ShoppingCart belongs to a specific User.
+            Aggregation with Ticket: The ShoppingCart contains selected Ticket(s).
+        Inheritance:
+            None.
+
+    Venue:
+        Associations:
+            Aggregation with Ticket: The Venue hosts events associated with Tickets.
+            Aggregation with Movie: The Venue screens Movies.
+        Inheritance:
+            None.
+
+    Discount:
+        Associations:
+            Aggregation with Ticket: Discounts are applicable to certain Tickets.
+        Inheritance:
+            None.
+
+    Notification:
+        Associations:
+            Aggregation with User: Notifications are sent to specific Users.
+        Inheritance:
+            None.
+
+    Admin:
+        Associations:
+            Aggregation with User: An Admin is a specialized User with additional privileges.
+        Inheritance:
+            None.
+
+    Database:
+        Associations:
+            Aggregation with User: The Database stores User information.
+            Aggregation with Ticket: The Database stores Ticket information.
+            Aggregation with Movie: The Database stores Movie information.
+            Aggregation with Payment: The Database stores Payment information.
+        Inheritance:
+            None.
+
+    MobileDev:
+        Associations:
+            Aggregation with User: A MobileDev is associated with a User for accessing the system via mobile devices.
+        Inheritance:
+            None.
+
+    WebBrowser:
+        Associations:
+            Aggregation with User: A WebBrowser is associated with a User for accessing the system via web browsers.
+        Inheritance:
+            None.
