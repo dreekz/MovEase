@@ -1,0 +1,195 @@
+@startuml
+
+' Cearted by Yarin Akiva, Roy Shlomo Chen
+' Last Updated: May 26,2023
+' Project: MovEase Online Ticketing System
+' College: Holon Institute Of Technology
+' Course: Software Engineering
+
+
+
+class User {
+  - userID: string
+  - username: string
+  - password: string
+  - email: string
+  - role: string
+  + setUserDetails(userID: string, username: string, password: string, email: string, role: string): void
+  + getUserID(): string
+  + getUsername(): string
+  + getEmail(): string
+  + getRole(): string
+  + purchaseTickets(tickets: Ticket[]): void
+  + makePayment(amount: number): Payment
+}
+
+class Ticket {
+  - ticketID: string
+  - movie: Movie
+  - user: User
+  - venue: Venue
+  + setTicketDetails(ticketID: string, movie: Movie, user: User, venue: Venue): void
+  + getTicketID(): string
+  + getMovie(): Movie
+  + getUser(): User
+  + getVenue(): Venue
+}
+
+class Movie {
+  - movieID: string
+  - title: string
+  - genre: string
+  - duration: number
+  - description: string
+  + setMovieDetails(movieID: string, title: string, genre: string, duration: number, description: string): void
+  + getMovieID(): string
+  + getTitle(): string
+  + getGenre(): string
+  + getDuration(): number
+  + getDescription(): string
+}
+
+class Payment {
+  - paymentID: string
+  - amount: number
+  - user: User
+  - tickets: Ticket[]
+  - paymentGateway: PaymentGateway
+  + setPaymentDetails(paymentID: string, amount: number, user: User, tickets: Ticket[], paymentGateway: PaymentGateway): void
+  + getPaymentID(): string
+  + getAmount(): number
+  + getUser(): User
+  + getTickets(): Ticket[]
+  + processPayment(): boolean
+}
+
+class PaymentGateway {
+  - gatewayID: string
+  - name: string
+  + setGatewayDetails(gatewayID: string, name: string): void
+  + getGatewayID(): string
+  + getName(): string
+  + encryptPaymentDetails(paymentDetails: object): string
+  + processPayment(paymentDetails: object): boolean
+}
+
+class ShoppingCart {
+  - user: User
+  - tickets: Ticket[]
+  + setUser(user: User): void
+  + getUser(): User
+  + addTicket(ticket: Ticket): void
+  + removeTicket(ticket: Ticket): void
+  + getTickets(): Ticket[]
+  + calculateTotalAmount(): number
+}
+
+class Venue {
+  - venueID: string
+  - name: string
+  - location: string
+  + setVenueDetails(venueID: string, name: string, location: string): void
+  + getVenueID(): string
+  + getName(): string
+  + getLocation(): string
+}
+
+class Discount {
+  - discountID: string
+  - title: string
+  - description: string
+  - percentage: number
+  + setDiscountDetails(discountID: string, title: string, description: string, percentage: number): void
+  + getDiscountID(): string
+  + getTitle(): string
+  + getDescription(): string
+  + getPercentage(): number
+}
+
+class Notification {
+  - notificationID: string
+  - message: string
+  - user: User
+  + setNotificationDetails(notificationID: string, message: string, user: User): void
+  + getNotificationID(): string
+  + getMessage(): string
+  + getUser(): User
+}
+
+class Admin {
+  - adminID: string
+  - username: string
+  - password: string
+  - email: string
+  + setAdminDetails(adminID: string, username: string, password: string, email: string): void
+  + getAdminID(): string
+  + getUsername(): string
+  + getEmail(): string
+  + createMovie(movieDetails: object): Movie
+  + deleteMovie(movieID: string): boolean
+}
+
+class Database {
+  - users: User[]
+  - tickets: Ticket[]
+  - movies: Movie[]
+  - payments: Payment[]
+  + addUser(user: User): void
+  + getUser(userID: string): User
+  + addTicket(ticket: Ticket): void
+  + getTicket(ticketID: string): Ticket
+  + addMovie(movie: Movie): void
+  + getMovie(movieID: string): Movie
+  + addPayment(payment: Payment): void
+  + getPayment(paymentID: string): Payment
+}
+
+class MobileDev {
+  - user: User
+  + setUser(user: User): void
+  + getUser(): User
+  + displayMobileInterface(): void
+}
+
+class WebBrowser {
+  - user: User
+  + setUser(user: User): void
+  + getUser(): User
+  + displayWebInterface(): void
+}
+
+User -- ShoppingCart
+User -- Ticket
+User "1" *-- "n" Ticket : purchases
+User "1" -- "1" Payment : makes
+User "1" -- "n" Notification : receives
+
+Ticket -- Movie
+Ticket -- Venue
+
+Movie "1" -- "n" Ticket : has
+Movie -- Discount
+
+Payment "1" -- "n" Ticket : pays for
+Payment -- PaymentGateway
+
+ShoppingCart "1" -- "1" User : belongs to
+
+Venue -- Ticket
+
+Discount "1" -- "n" Movie : applies to
+
+Notification "1" -- "1" User : belongs to
+
+Admin -- Movie : manages
+Admin -- Database : manages
+
+Database "1" -- "n" User : stores
+Database "1" -- "n" Ticket : stores
+Database "1" -- "n" Movie : stores
+Database "1" -- "n" Payment : stores
+
+MobileDev "1" -- "1" User : develops for
+WebBrowser "1" -- "1" User : interacts with
+
+@enduml
